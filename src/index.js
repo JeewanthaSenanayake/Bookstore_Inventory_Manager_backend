@@ -28,6 +28,8 @@ app.listen(PORT, () => {
 
 const productRouters = require('../routes/product');
 const imgUploadRouters = require('../routes/img_upload');
-app.use('/api', productRouters);
-app.use('/api', imgUploadRouters);
+const vendorRouters = require('../routes/vendor_detail');
+app.use('/api/product', productRouters);
+app.use('/api/product', imgUploadRouters);
+app.use('/api/vendor', vendorRouters);
 

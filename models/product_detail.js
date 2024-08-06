@@ -13,6 +13,10 @@ const dataSchema = new mongoose.Schema({
         required: true,
         type: Number
     },
+    price: {
+        required: true,
+        type: Number
+    },
     product_discription: {
         required: true,
         type: String
