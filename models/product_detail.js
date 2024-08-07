@@ -29,6 +29,11 @@ const dataSchema = new mongoose.Schema({
         required: true,
         type: Array
     },
+    favourite: {
+        required: true,
+        type: Boolean,
+        default: false
+    }
 })
 
 module.exports = mongoose.model('Products', dataSchema)

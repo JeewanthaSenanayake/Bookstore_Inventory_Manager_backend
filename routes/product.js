@@ -19,7 +19,7 @@ productRouters.post('/add_product', async (req, res) => {
 
     try {
         const dataToSave = await data.save();
-        res.status(200).json({"masage":"sucessfull" })
+        res.status(200).json({ "masage": "sucessfull" })
     }
     catch (error) {
         res.status(400).json({ message: error.message })
@@ -77,18 +77,46 @@ productRouters.put('/update_product/:id', async (req, res) => {
 
 productRouters.delete('/delete_products/:id', async (req, res) => {
     try {
-      const productId = req.params.id;
-  
-      const deletedProduct = await Model.findByIdAndDelete(productId);
-  
-      if (!deletedProduct) {
-        return res.status(404).json({ message: 'Product not found' });
-      }
-  
-      res.status(200).json({ message: 'Product deleted successfully' });
+        const productId = req.params.id;
+
+        const deletedProduct = await Model.findByIdAndDelete(productId);
+
+        if (!deletedProduct) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        res.status(200).json({ message: 'Product deleted successfully' });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
-  });
+});
+
+productRouters.get('/favourite_products', async (req, res) => {
+    try {
+        const data = await Model.find({ favourite: true });
+        res.status(200).json(data)
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+});
+
+productRouters.put('/add_favourite_products/:id/:fav', async (req, res) => {
+    try {
+        const productId = req.params.id;
+        const fav = req.params.fav;
+        const data = await Model.findById(productId);
+        if (!data) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        data.favourite = fav;
+        const dataToSave = await data.save();
+        res.status(200).json({ "masage": "sucessfull" })
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+);
 
 module.exports = productRouters;
