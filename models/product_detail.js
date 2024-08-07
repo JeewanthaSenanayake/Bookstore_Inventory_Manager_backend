@@ -15,7 +15,7 @@ const dataSchema = new mongoose.Schema({
     },
     price: {
         required: true,
-        type: Number
+        type: String
     },
     product_discription: {
         required: true,

@@ -3,7 +3,7 @@ const Model = require('../models/vendor_details');
 
 
 const vendorRouters = express.Router()
-/*create a vendor for development perpos, requirment is only for a vender, 
+/*create a vendor for development, requirment is only for a vender, 
 there for not develop authentication and authoraisation*/
 
 vendorRouters.post('/create_vendor', async (req, res) => {
