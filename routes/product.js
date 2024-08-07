@@ -51,6 +51,29 @@ productRouters.get('/get_product_byid/:id', async (req, res) => {
     }
 }
 );
+productRouters.put('/update_product/:id', async (req, res) => {
+    try {
+        const productId = req.params.id;
+        const data = await Model.findById(productId);
+        if (!data) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        data.product_name = req.body.product_name;
+        data.sku = req.body.sku;
+        data.quantity = req.body.quantity;
+        data.price = req.body.price;
+        data.product_discription = req.body.product_discription;
+        data.thumbnail = req.body.thumbnail;
+        data.product_images = req.body.product_images;
+        const dataToSave = await data.save();
+        res.status(200).json({ "masage": "sucessfull" })
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+);
+
 
 productRouters.delete('/delete_products/:id', async (req, res) => {
     try {
