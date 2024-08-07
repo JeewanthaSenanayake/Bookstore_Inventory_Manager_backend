@@ -119,4 +119,15 @@ productRouters.put('/add_favourite_products/:id/:fav', async (req, res) => {
 }
 );
 
+productRouters.get('/search', async (req, res) => {
+    const query = req.query.q;
+    // console.log(query)
+    try {
+      const results = await Model.find({ product_name: new RegExp(query, 'i') });
+      res.json(results);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
 module.exports = productRouters;
