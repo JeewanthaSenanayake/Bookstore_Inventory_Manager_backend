@@ -1,8 +1,6 @@
 const express = require('express');
 const Model = require('../models/product_detail');
 
-
-
 const productRouters = express.Router()
 productRouters.post('/add_product', async (req, res) => {
 
@@ -38,5 +36,36 @@ productRouters.get('/get_products', async (req, res) => {
         res.status(400).json({ message: error.message })
     }
 });
+
+productRouters.get('/get_product_byid/:id', async (req, res) => {
+    try {
+        const productId = req.params.id;
+        const data = await Model.findById(productId);
+        if (!data) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        res.status(200).json(data)
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+);
+
+productRouters.delete('/delete_products/:id', async (req, res) => {
+    try {
+      const productId = req.params.id;
+  
+      const deletedProduct = await Model.findByIdAndDelete(productId);
+  
+      if (!deletedProduct) {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+  
+      res.status(200).json({ message: 'Product deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
 
 module.exports = productRouters;
